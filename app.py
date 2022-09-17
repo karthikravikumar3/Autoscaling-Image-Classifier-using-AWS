@@ -1,7 +1,7 @@
 # Importing flask module in the project is mandatory
 # An object of Flask class is our WSGI application.
 from flask import (Flask, request,render_template)
-
+import base64
 # Flask constructor takes the name of
 # current module (_name_) as argument.
 app = Flask(__name__)
@@ -9,18 +9,26 @@ app = Flask(__name__)
 # The route() function of the Flask class is a decorator,
 # which tells the application which URL should call
 # the associated function.
-@app.route('/', methods = ['GET','POST'])
+@app.route('/')
 # ‘/’ URL is bound with hello_world() function.
 def hello_world():
         return 'Hello World'
 
-@app.route('/poster',methods = ['POST','GET'])
-def postmessage():
-    if request.method=="POST":
-        textInput = request.form["data"]
-        print(textInput)
-        return render_template("text.html",text=textInput)
+'''def postmessage():
+        uploaded_file = request.files['file']
+        if uploaded_file.filename != '':
+            uploaded_file.save(uploaded_file.filename)
+        return redirect(url_for('hello_world'))
+        '''
+@app.route('/upload', methods=['POST','GET'])
+def upload():
+    data = request.data
+    #decode = base64.b64decode(data)
+    print(data)
+    return 'hello'
 #Doesnt work
+
+'''
 
 '''
 def process_image():
