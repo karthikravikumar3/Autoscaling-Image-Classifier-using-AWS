@@ -21,7 +21,7 @@ s3 = boto3.client('s3')
 request_queue_url = 'https://sqs.us-east-1.amazonaws.com/321247833586/RequestQueue'
 response_queue_url = 'https://sqs.us-east-1.amazonaws.com/321247833586/ResponseQueue'
 input_bucket_name = 'ccinput'
-out_bucket_name = 'ccoutput1'
+output_bucket_name = 'ccoutput1'
 
 
 def upload_file(file_name, bucket):
@@ -53,23 +53,22 @@ while True:
     result = labels[np.array(predicted)[0]]
 
     save_name = f"{img_name},{result}"
+    with open(img_name+'output', 'w') as f:
+        f.write(save_name)
     
     upload_file(img_name, input_bucket_name)
 
-    msg_response = 0
+    msg_response = None
     while msg_response!=200:
         msg_response  = sqs.send_message(QueueUrl=response_queue_url, MessageBody=save_name)
 
+    upload_file(img_name, input_bucket_name)
+    upload_file(img_name+'output', output_bucket_name)
 
-    
-   
-
-    del_responce = 0
+    del_responce = None
     while del_responce!=200:
         del_responce = sqs.delete_message(QueueUrl=request_queue_url , ReceiptHandle=['Messages'][0]['ReceiptHandle'])
     
-        
-
     print(f"{save_name}")
 
     time.sleep(5)
