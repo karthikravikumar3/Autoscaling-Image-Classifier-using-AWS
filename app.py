@@ -1,56 +1,54 @@
-# Importing flask module in the project is mandatory
-# An object of Flask class is our WSGI application.
-from flask import (Flask, request,render_template)
+import boto3
+import base64
+import os
+from flask import Flask, flash, request
+from werkzeug.utils import secure_filename
 
-# Flask constructor takes the name of
-# current module (_name_) as argument.
+UPLOAD_FOLDER = '/home/ubuntu/savedImages'
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+sqs=boto3.client('sqs')
 
-# The route() function of the Flask class is a decorator,
-# which tells the application which URL should call
-# the associated function.
-@app.route('/', methods = ['GET','POST'])
-# ‘/’ URL is bound with hello_world() function.
+
+@app.route('/')
 def hello_world():
         return 'Hello World'
 
-@app.route('/poster',methods = ['POST','GET'])
-def postmessage():
-    if request.method=="POST":
-        textInput = request.form["data"]
-        print(textInput)
-        return render_template("text.html",text=textInput)
-#Doesnt work
+'''def postmessage():
+        uploaded_file = request.files['file']
+        if uploaded_file.filename != '':
+            uploaded_file.save(uploaded_file.filename)
+        return redirect(url_for('hello_world'))
+        '''
+@app.route('/upload', methods=['POST','GET'])
+def upload():
+    if request.method == 'POST':
+        #data = request.data
+        #print(data)
+        #return 'hi'
+    #decode = base64.b64decode(data)
+        file3 = request.files.getlist('myfile')
+        for file2 in file3:
+            filename = secure_filename(file2.filename)
+            path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file2.save(path)
+            with open("/home/ubuntu/savedImages/"+filename, "rb") as image2string:
+                converted_string = base64.b64encode(image2string.read())
+                print(converted_string)
+                sqs.send_message(QueueUrl='https://sqs.us-east1.amazonaws.com/321247833586/RequestQueue',MessageBody=str(converted_string))
+        #file2.save(path)
 
-'''
-def process_image():
-    file = request.files['image']
-    # Read the image via file.stream
-    img = Image.open(file.stream)
+        #print(file3)
+        '''
+        if file1 not in request.files:
+            print('No file part')
+        file1 = request.files['file']
+        if file1.filename == '':
+            print('No selected file')
+        '''
 
-    return jsonify({'msg': 'success', 'size': [img.width, img.height]})
-
-#for multiple files
-files = request.files.to_dict(flat=False) ## files is a list containing two images.
-for i, file in enumerate(files):
-    file.save(f'image-{i}.jpg')
-
-def generateId():
-    #ID generator logic, we can use some form of hashing
-    return 'text'
-
-def scaleUp(): #if request>x req per y milliseconds
-    return 'text'
-
-def scaleDown(): #if request<x req per y milliseconds
-    return 'text' 
+        return 'hi'
+        #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+ 
         
-def addMessageIdAndSendtoSQS(file,messageId): #add message id with the files
-    return 'text' 
-
-def reieveOutputFromSQS():
-    return 'text' 
-    
-def sendPutRequestToWG(output,messageId): 
-    return 'text' 
-'''
+        
