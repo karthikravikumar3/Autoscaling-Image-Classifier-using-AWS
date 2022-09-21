@@ -14,11 +14,9 @@ import boto3
 import base64
 import os
 
-print(1)
 model = models.resnet18(pretrained=True)
 model.eval()
 
-print(2)
 sqs = boto3.client('sqs')
 s3 = boto3.client('s3')
 request_queue_url = 'https://sqs.us-east-1.amazonaws.com/477824770261/RequestQueue'
@@ -26,7 +24,6 @@ response_queue_url = 'https://sqs.us-east-1.amazonaws.com/477824770261/ResponseQ
 input_bucket_name = 'cc-project-input'
 output_bucket_name = 'cc-project-output'
 
-print(3)
 def upload_file(file_name, bucket):
     object_name = os.path.basename(file_name)
     s3.upload_file(file_name, bucket, object_name)
@@ -37,55 +34,41 @@ print(4)
 while True:
     try:
         msg = sqs.receive_message(QueueUrl=request_queue_url,AttributeNames=['All'], MessageAttributeNames =['All'])
-        # print(4.1, msg)
         bytes = str.encode(msg['Messages'][0]['Body'])
 
-        # print(5, bytes)
         img_name = msg['Messages'][0]['MessageAttributes']['ImageName']['StringValue']  #need to update as per changes in web tier
         img_add = f'/home/ubuntu/{img_name}'
 
         file = open(img_add, 'wb')
-        print(555)
         img_bytes = base64.b64decode((bytes))
         file.write(img_bytes)
         file.close()
         img = Image.open(img_add)
-        print(6)
 
         img_tensor = transforms.ToTensor()(img).unsqueeze_(0)
         outputs = model(img_tensor)
         _, predicted = torch.max(outputs.data, 1)
 
-        print(7)
         with open('./classifier/imagenet-labels.json') as f:
             labels = json.load(f)
         result = labels[np.array(predicted)[0]]
 
-        print(8)
         save_name = f"{img_name},{result}"
         print(f"-----------------------------------> {save_name}")
         with open(img_add+'-output.txt', 'w') as f:
             f.write(save_name)
 
-
-        print(10)
         msg_response = None
 
         msg_response  = sqs.send_message(QueueUrl=response_queue_url, MessageBody=save_name)
-        print(10.1,msg_response==200)
 
-
-        print(11)
         upload_file(img_add, input_bucket_name)
-        print(11111)
         upload_file(img_add+'-output.txt', output_bucket_name)
 
-        print(12)
         del_responce = None
 
         del_responce = sqs.delete_message(QueueUrl=request_queue_url , ReceiptHandle=msg['Messages'][0]['ReceiptHandle'])
 
-        print(13)
         print(f"{save_name}")
     except:
         print('Sleep for 3 sec...')
