@@ -1,11 +1,12 @@
 import boto3
+import time
 import base64
 import os
 from flask import Flask, flash, request
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = '/home/ubuntu/savedImages'
-app = Flask(_name_)
+app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 sqs=boto3.client('sqs')
 
