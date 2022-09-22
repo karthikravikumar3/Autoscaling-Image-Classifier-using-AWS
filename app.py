@@ -30,7 +30,6 @@ def upload_file(file_name, bucket):
  
     return True
 
-print(4)
 while True:
     try:
         msg = sqs.receive_message(QueueUrl=request_queue_url,AttributeNames=['All'], MessageAttributeNames =['All'])
@@ -74,6 +73,8 @@ while True:
         del_responce = sqs.delete_message(QueueUrl=request_queue_url , ReceiptHandle=msg['Messages'][0]['ReceiptHandle'])
 
         print(f"{save_name}")
+        #print('Sleep for 10 sec...')
+        #time.sleep(10)
     except:
         print('Sleep for 5 sec...')
         time.sleep(5)
