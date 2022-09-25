@@ -19,10 +19,10 @@ model.eval()
 
 sqs = boto3.client('sqs')
 s3 = boto3.client('s3')
-request_queue_url = 'https://sqs.us-east-1.amazonaws.com/477824770261/RequestQueue'
-response_queue_url = 'https://sqs.us-east-1.amazonaws.com/477824770261/ResponseQueue'
-input_bucket_name = 'cc-project-input'
-output_bucket_name = 'cc-project-output'
+request_queue_url = 'https://sqs.us-east-1.amazonaws.com/445395669996/RequestQueue'
+response_queue_url = 'https://sqs.us-east-1.amazonaws.com/445395669996/ResponseQueue'
+input_bucket_name = 'cloud-project-input'
+output_bucket_name = 'cloud-project-output'
 
 def upload_file(file_name, bucket):
     object_name = os.path.basename(file_name)
@@ -48,7 +48,7 @@ while True:
         outputs = model(img_tensor)
         _, predicted = torch.max(outputs.data, 1)
 
-        with open('./classifier/imagenet-labels.json') as f:
+        with open('/home/ubuntu/classifier/imagenet-labels.json') as f:
             labels = json.load(f)
         result = labels[np.array(predicted)[0]]
 

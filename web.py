@@ -11,8 +11,8 @@ application = Flask(__name__)
 application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 sqs=boto3.client('sqs')
 
-request_queue_url = 'https://sqs.us-east-1.amazonaws.com/477824770261/RequestQueue'
-response_queue_url = 'https://sqs.us-east-1.amazonaws.com/477824770261/ResponseQueue'
+request_queue_url = 'https://sqs.us-east-1.amazonaws.com/445395669996/RequestQueue'
+response_queue_url = 'https://sqs.us-east-1.amazonaws.com/445395669996/ResponseQueue'
 
 @application.route('/')
 def hello_world():
