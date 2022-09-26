@@ -7,12 +7,10 @@ Group members:
  - Karthik Ravi Kumar - 1225910467
  - Tirth Hihoriya - 1225413475 
  
-AWS IAM user credentials:
-Accound id: 477824770261
-
-IAM user name: Faculty
-
-Password: ccprojectfaculty#1
+## AWS IAM user credentials:
+Accound id: `477824770261`
+IAM user name: `Faculty`
+Password: `ccprojectfaculty#1`
 
 ## Member Tasks
 ### Deval Pandya - (ASU ID: 1225424200)
@@ -23,6 +21,14 @@ Password: ccprojectfaculty#1
 
 ### Tirth Hihoriya  -  (ASU ID: 1225413475 )
  - I have designed the App-Tier. The app-tier includes basic image classification program. It receives a task from the RequestQueue and processes it. Once it is done with processing, it sends the output to the Response Queue. It also stores the input in input-bucket and output in output-bucket. If no new task comes to it, it waits for 5 seconds. I have tested the app-tier code rigorously and updated it to have more robust code. In the code there are many points where there is a chance of exceptions. These exceptions may occur due to reasons such as, the code might not get a message from RequestQueue, the input and output might not be stored in S3 buckets successfully, the message form RequestQueue might not be deleted successfully after it gets processed, etc. Thus, to handle it the code is taken care of with the ‘try-except’ block. If any exception occurs then it will wait for 5 seconds and will try to process again.
+
+<hr>
+PEM key for web-tierSSH access: 
+Web-tier's URL:
+EIP:
+SQS queue names: `RequestQueue` and `ResponseQueue`
+S3 bucket names: `ccInput` and `ccOutput`
+
 
 
 
