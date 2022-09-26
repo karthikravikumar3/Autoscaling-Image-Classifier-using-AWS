@@ -26,11 +26,7 @@ Password: `ccprojectfaculty#1`
 
 <hr>
 
-PEM key for web-tierSSH access: 
-
-Web-tier's URL:
-
-EIP:
+Web-tier's URL: http://3.92.213.222:8080/upload
 
 SQS queue names: `RequestQueue` and `ResponseQueue`
 
