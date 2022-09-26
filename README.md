@@ -1,6 +1,6 @@
 # Autoscaling Image Classifier using AWS
 
-#CSE 546: Cloud Computing Project 
+## CSE 546: Cloud Computing Project 
 
 Group members:
  - Deval Pandya - 1225424200
