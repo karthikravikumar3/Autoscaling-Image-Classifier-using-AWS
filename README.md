@@ -35,8 +35,11 @@ S3 bucket names: `cc-project-input` and `cc-project-output`
  - I have designed the App-Tier. The app-tier includes basic image classification program. It receives a task from the RequestQueue and processes it. Once it is done with processing, it sends the output to the Response Queue. It also stores the input in input-bucket and output in output-bucket. If no new task comes to it, it waits for 5 seconds. I have tested the app-tier code rigorously and updated it to have more robust code. In the code there are many points where there is a chance of exceptions. These exceptions may occur due to reasons such as, the code might not get a message from RequestQueue, the input and output might not be stored in S3 buckets successfully, the message form RequestQueue might not be deleted successfully after it gets processed, etc. Thus, to handle it the code is taken care of with the ‘try-except’ block. If any exception occurs then it will wait for 5 seconds and will try to process again.
  
  <hr>
+ 
 ### Video for full working project
+
 - https://drive.google.com/file/d/1Qw1KJtcVgxFKJgd8L_aqsYG3gE5W_pAC/view?usp=sharing
+
 Login with your ASU id to see it.
 
 
