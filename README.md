@@ -22,6 +22,7 @@ SQS queue names: `RequestQueue` and `ResponseQueue`
 
 S3 bucket names: `cc-project-input` and `cc-project-output`
 
+<hr>
 
 ## Member Tasks
 ### Deval Pandya - (ASU ID: 1225424200)
