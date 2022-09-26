@@ -9,7 +9,9 @@ Group members:
  
 ## AWS IAM user credentials:
 Accound id: `477824770261`
+
 IAM user name: `Faculty`
+
 Password: `ccprojectfaculty#1`
 
 ## Member Tasks
@@ -24,10 +26,14 @@ Password: `ccprojectfaculty#1`
 
 <hr>
 PEM key for web-tierSSH access: 
+
 Web-tier's URL:
+
 EIP:
+
 SQS queue names: `RequestQueue` and `ResponseQueue`
-S3 bucket names: `ccInput` and `ccOutput`
+
+S3 bucket names: `cc-project-input` and `cc-project-output`
 
 
 
