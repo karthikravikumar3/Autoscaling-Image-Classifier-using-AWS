@@ -10,10 +10,10 @@ max_count = int(20)
 current_count = 0
 instance_type = 't2.micro'
 key_name = 'KP1'
-security_group_id = 'sg-077daba5ab4185254'
-iam_instance_profile = 'arn:aws:iam::445395669996:instance-profile/EC2-S3-SQS-FullAccess'
+security_group_id = 'sg-0febb3a5f36bbd06d'
+iam_instance_profile = 'arn:aws:iam::477824770261:instance-profile/EC2-SQS-S3-FullAccess'
 instance_name = 'app_instance'
-userdata = '#cloud-boothook \n#!/bin/bash \nsudo apt update \nsudo apt install -y python3 \nsudo apt install -y python3-flask \nsudo apt install -y python3-boto3 \nsudo apt install -y tmux \nsudo apt install -y awscli \nmkdir /home/ubuntu/.aws \naws s3 cp s3://cloud-project-extra/config /home/ubuntu/.aws/ \naws s3 cp s3://cloud-project-extra/config ~/.aws/ \naws s3 cp s3://cloud-project-extra/app.py /home/ubuntu/ \nchmod +777 /home/ubuntu/app.py \ntouch /home/ubuntu/log.txt \nchmod -R 777 /home/ubuntu \nsudo -u ubuntu python3 /home/ubuntu/app.py \n'
+userdata = '#cloud-boothook \n#!/bin/bash \nsudo apt update \nsudo apt install -y python3 \nsudo apt install -y python3-flask \nsudo apt install -y python3-boto3 \nsudo apt install -y tmux \nsudo apt install -y awscli \nmkdir /home/ubuntu/.aws \naws s3 cp s3://cc-project-extra/config /home/ubuntu/.aws/ \naws s3 cp s3://cc-project-extra/config ~/.aws/ \naws s3 cp s3://cc-project-extra/app.py /home/ubuntu/ \nchmod +777 /home/ubuntu/app.py \ntouch /home/ubuntu/log.txt \nchmod -R 777 /home/ubuntu \nsudo -u ubuntu python3 /home/ubuntu/app.py \n'
 instance_list = []
 scale_in_count=0
 
@@ -30,7 +30,7 @@ for x in instances['Reservations']:
 
 print('Instance List: \n', instance_list)
 
-request_queue_url = 'https://sqs.us-east-1.amazonaws.com/445395669996/RequestQueue'
+request_queue_url = 'https://sqs.us-east-1.amazonaws.com/477824770261/RequestQueue'
 
 while True:
     try:
