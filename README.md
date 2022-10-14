@@ -7,12 +7,6 @@ Group members:
  - Karthik Ravi Kumar - 1225910467
  - Tirth Hihoriya - 1225413475 
  
-## AWS IAM user credentials:
-Accound id: `477824770261`
-
-IAM user name: `Faculty`
-
-Password: `ccprojectfaculty#1`
 
 <hr>
 
